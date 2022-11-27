@@ -2,8 +2,9 @@ version: "3.4"
 
 services:
   postgres:
-    container_name: go-api
+    container_name: template-go-api
     image: postgis/postgis:13-master
+    tty: true
     ports:
       - 4432:5432
     environment:
@@ -11,10 +12,10 @@ services:
       - DB_NAME=postgres
       - DB_USER=postgres
       - DB_PASSWORD=postgres
-      - PG_PASSWORD=postgres
+      - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./db/:/docker-entrypoint-initdb.d/
-      - ./db/data:/var/lib/postgresql/data
+      - ./database/:/docker-entrypoint-initdb.d/
+      - ./database/data:/var/lib/postgresql/data
     networks:
       - api-network
 

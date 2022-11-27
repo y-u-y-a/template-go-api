@@ -1,4 +1,4 @@
-.PHONY: up db-up db-down dev build
+.PHONY: up up-db down-db conn-db dev build
 up:
 	go install github.com/cosmtrek/air@latest
 	go install github.com/golang/mock/mockgen@latest
@@ -6,12 +6,15 @@ up:
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 	go install entgo.io/ent/cmd/ent@latest
 
-db-up: # dbを起動する
+up-db: # dbを起動する
 	docker-compose up -d
 
-db-down: # dbを停止してデータを削除する
+down-db: # dbを停止してデータを削除する
 	docker-compose down --rmi all
-	rm -r db/data
+	rm -rf database/data
+
+conn-db: # dbコンテナに接続
+	PGPASSWORD=postgres psql -h localhost -p 4432 -U postgres -d postgres
 
 dev:
 	air
