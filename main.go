@@ -7,10 +7,12 @@ import (
 	"y-u-y-a/template-go/config"
 	"y-u-y-a/template-go/utils"
 
+	"entgo.io/ent/examples/fs/ent"
 	chi "github.com/go-chi/chi/v5"
 	chiMiddleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	"github.com/k0kubun/pp"
+	_ "github.com/lib/pq"
 	"go.uber.org/zap"
 )
 
@@ -38,18 +40,16 @@ func main() {
 	/*****************************
 	DB接続
 	******************************/
-	// dbConnection, err := sql.Open(
-	// 	"postgres",
-	// 	fmt.Sprintf(
-	// 		"postgres://%s:%s@%s:%s/%s",
-	// 		config.AppEnv.DbUser, config.AppEnv.DbPassword,
-	// 		config.AppEnv.DbHost, config.AppEnv.DbPort,
-	// 		config.AppEnv.DbName,
-	// 	))
-	// if err != nil {
-	// 	logger.Fatal("DB接続に失敗しました", zap.Error(err))
-	// }
-	// defer dbConnection.Close()
+	client, err := ent.Open("postgres", fmt.Sprintf(
+		"postgres://%s:%s@%s:%s/%ssslmode=disable",
+		config.AppEnv.DbUser, config.AppEnv.DbPassword,
+		config.AppEnv.DbHost, config.AppEnv.DbPort,
+		config.AppEnv.DbName,
+	))
+	if err != nil {
+		logger.Fatal("データベース接続に失敗しました", zap.Error(err))
+	}
+	defer client.Close()
 
 	/*****************************
 	ミドルウェアの設定
