@@ -27,10 +27,7 @@ func init() {
 }
 
 func main() {
-	// 環境変数の出力
-	pp.Println("appConfig is", config.AppEnv)
-
-	// ロギングの設定
+	// ロギングの出力設定
 	var logger *zap.Logger
 	if config.AppEnv.IsProd() {
 		logger, _ = zap.NewProduction()
@@ -76,6 +73,8 @@ func main() {
 	/*****************************
 	サーバー起動
 	******************************/
+	pp.Println("appConfig is", config.AppEnv)
+	logger.Info(fmt.Sprintf("Start listening on %v", config.AppEnv.ServerPort))
 	if err := http.ListenAndServe(fmt.Sprintf(":%v", config.AppEnv.ServerPort), r); err != nil {
 		logger.Fatal("サーバー起動に失敗しました", zap.Error(err))
 	}
