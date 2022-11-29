@@ -23,7 +23,7 @@ $ make seed
 $ go run entgo.io/ent/cmd/ent init [User]
 ```
 
-2. ./ent/shema/配下にモデル定義ファイルが生成するので記述する
+2. `./ent/shema`配下にモデル定義ファイルが生成するので記述する
 3. メソッドなどのファイルが生成する
 
 ```shell:
