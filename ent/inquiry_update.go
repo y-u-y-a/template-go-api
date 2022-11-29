@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 	"y-u-y-a/template-go/ent/inquiry"
 	"y-u-y-a/template-go/ent/predicate"
 
@@ -27,9 +28,55 @@ func (iu *InquiryUpdate) Where(ps ...predicate.Inquiry) *InquiryUpdate {
 	return iu
 }
 
+// SetCreatedAt sets the "created_at" field.
+func (iu *InquiryUpdate) SetCreatedAt(t time.Time) *InquiryUpdate {
+	iu.mutation.SetCreatedAt(t)
+	return iu
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (iu *InquiryUpdate) SetNillableCreatedAt(t *time.Time) *InquiryUpdate {
+	if t != nil {
+		iu.SetCreatedAt(*t)
+	}
+	return iu
+}
+
 // SetName sets the "name" field.
 func (iu *InquiryUpdate) SetName(s string) *InquiryUpdate {
 	iu.mutation.SetName(s)
+	return iu
+}
+
+// SetEmail sets the "email" field.
+func (iu *InquiryUpdate) SetEmail(s string) *InquiryUpdate {
+	iu.mutation.SetEmail(s)
+	return iu
+}
+
+// SetTel sets the "tel" field.
+func (iu *InquiryUpdate) SetTel(s string) *InquiryUpdate {
+	iu.mutation.SetTel(s)
+	return iu
+}
+
+// SetContent sets the "content" field.
+func (iu *InquiryUpdate) SetContent(s string) *InquiryUpdate {
+	iu.mutation.SetContent(s)
+	return iu
+}
+
+// SetIsConfirm sets the "is_confirm" field.
+func (iu *InquiryUpdate) SetIsConfirm(b bool) *InquiryUpdate {
+	iu.mutation.SetIsConfirm(b)
+	return iu
+}
+
+// SetNillableIsConfirm sets the "is_confirm" field if the given value is not nil.
+func (iu *InquiryUpdate) SetNillableIsConfirm(b *bool) *InquiryUpdate {
+	if b != nil {
+		iu.SetIsConfirm(*b)
+	}
 	return iu
 }
 
@@ -110,8 +157,23 @@ func (iu *InquiryUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := iu.mutation.CreatedAt(); ok {
+		_spec.SetField(inquiry.FieldCreatedAt, field.TypeTime, value)
+	}
 	if value, ok := iu.mutation.Name(); ok {
 		_spec.SetField(inquiry.FieldName, field.TypeString, value)
+	}
+	if value, ok := iu.mutation.Email(); ok {
+		_spec.SetField(inquiry.FieldEmail, field.TypeString, value)
+	}
+	if value, ok := iu.mutation.Tel(); ok {
+		_spec.SetField(inquiry.FieldTel, field.TypeString, value)
+	}
+	if value, ok := iu.mutation.Content(); ok {
+		_spec.SetField(inquiry.FieldContent, field.TypeString, value)
+	}
+	if value, ok := iu.mutation.IsConfirm(); ok {
+		_spec.SetField(inquiry.FieldIsConfirm, field.TypeBool, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, iu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -132,9 +194,55 @@ type InquiryUpdateOne struct {
 	mutation *InquiryMutation
 }
 
+// SetCreatedAt sets the "created_at" field.
+func (iuo *InquiryUpdateOne) SetCreatedAt(t time.Time) *InquiryUpdateOne {
+	iuo.mutation.SetCreatedAt(t)
+	return iuo
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (iuo *InquiryUpdateOne) SetNillableCreatedAt(t *time.Time) *InquiryUpdateOne {
+	if t != nil {
+		iuo.SetCreatedAt(*t)
+	}
+	return iuo
+}
+
 // SetName sets the "name" field.
 func (iuo *InquiryUpdateOne) SetName(s string) *InquiryUpdateOne {
 	iuo.mutation.SetName(s)
+	return iuo
+}
+
+// SetEmail sets the "email" field.
+func (iuo *InquiryUpdateOne) SetEmail(s string) *InquiryUpdateOne {
+	iuo.mutation.SetEmail(s)
+	return iuo
+}
+
+// SetTel sets the "tel" field.
+func (iuo *InquiryUpdateOne) SetTel(s string) *InquiryUpdateOne {
+	iuo.mutation.SetTel(s)
+	return iuo
+}
+
+// SetContent sets the "content" field.
+func (iuo *InquiryUpdateOne) SetContent(s string) *InquiryUpdateOne {
+	iuo.mutation.SetContent(s)
+	return iuo
+}
+
+// SetIsConfirm sets the "is_confirm" field.
+func (iuo *InquiryUpdateOne) SetIsConfirm(b bool) *InquiryUpdateOne {
+	iuo.mutation.SetIsConfirm(b)
+	return iuo
+}
+
+// SetNillableIsConfirm sets the "is_confirm" field if the given value is not nil.
+func (iuo *InquiryUpdateOne) SetNillableIsConfirm(b *bool) *InquiryUpdateOne {
+	if b != nil {
+		iuo.SetIsConfirm(*b)
+	}
 	return iuo
 }
 
@@ -245,8 +353,23 @@ func (iuo *InquiryUpdateOne) sqlSave(ctx context.Context) (_node *Inquiry, err e
 			}
 		}
 	}
+	if value, ok := iuo.mutation.CreatedAt(); ok {
+		_spec.SetField(inquiry.FieldCreatedAt, field.TypeTime, value)
+	}
 	if value, ok := iuo.mutation.Name(); ok {
 		_spec.SetField(inquiry.FieldName, field.TypeString, value)
+	}
+	if value, ok := iuo.mutation.Email(); ok {
+		_spec.SetField(inquiry.FieldEmail, field.TypeString, value)
+	}
+	if value, ok := iuo.mutation.Tel(); ok {
+		_spec.SetField(inquiry.FieldTel, field.TypeString, value)
+	}
+	if value, ok := iuo.mutation.Content(); ok {
+		_spec.SetField(inquiry.FieldContent, field.TypeString, value)
+	}
+	if value, ok := iuo.mutation.IsConfirm(); ok {
+		_spec.SetField(inquiry.FieldIsConfirm, field.TypeBool, value)
 	}
 	_node = &Inquiry{config: iuo.config}
 	_spec.Assign = _node.assignValues

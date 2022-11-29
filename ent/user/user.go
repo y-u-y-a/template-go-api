@@ -2,19 +2,29 @@
 
 package user
 
+import (
+	"time"
+)
+
 const (
 	// Label holds the string label denoting the user type in the database.
 	Label = "user"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCreatedAt holds the string denoting the created_at field in the database.
+	FieldCreatedAt = "created_at"
+	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
+	FieldUpdatedAt = "updated_at"
 	// FieldGivenName holds the string denoting the given_name field in the database.
 	FieldGivenName = "given_name"
 	// FieldFamilyName holds the string denoting the family_name field in the database.
 	FieldFamilyName = "family_name"
+	// FieldGender holds the string denoting the gender field in the database.
+	FieldGender = "gender"
 	// FieldEmail holds the string denoting the email field in the database.
 	FieldEmail = "email"
-	// FieldAge holds the string denoting the age field in the database.
-	FieldAge = "age"
+	// FieldBirthday holds the string denoting the birthday field in the database.
+	FieldBirthday = "birthday"
 	// FieldCompanyID holds the string denoting the company_id field in the database.
 	FieldCompanyID = "company_id"
 	// EdgeCompany holds the string denoting the company edge name in mutations.
@@ -33,10 +43,13 @@ const (
 // Columns holds all SQL columns for user fields.
 var Columns = []string{
 	FieldID,
+	FieldCreatedAt,
+	FieldUpdatedAt,
 	FieldGivenName,
 	FieldFamilyName,
+	FieldGender,
 	FieldEmail,
-	FieldAge,
+	FieldBirthday,
 	FieldCompanyID,
 }
 
@@ -49,3 +62,12 @@ func ValidColumn(column string) bool {
 	}
 	return false
 }
+
+var (
+	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
+	DefaultCreatedAt func() time.Time
+	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
+	DefaultUpdatedAt func() time.Time
+	// GenderValidator is a validator for the "gender" field. It is called by the builders before save.
+	GenderValidator func(int) error
+)

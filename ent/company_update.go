@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 	"y-u-y-a/template-go/ent/company"
 	"y-u-y-a/template-go/ent/predicate"
 
@@ -27,9 +28,17 @@ func (cu *CompanyUpdate) Where(ps ...predicate.Company) *CompanyUpdate {
 	return cu
 }
 
-// SetName sets the "name" field.
-func (cu *CompanyUpdate) SetName(s string) *CompanyUpdate {
-	cu.mutation.SetName(s)
+// SetCreatedAt sets the "created_at" field.
+func (cu *CompanyUpdate) SetCreatedAt(t time.Time) *CompanyUpdate {
+	cu.mutation.SetCreatedAt(t)
+	return cu
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (cu *CompanyUpdate) SetNillableCreatedAt(t *time.Time) *CompanyUpdate {
+	if t != nil {
+		cu.SetCreatedAt(*t)
+	}
 	return cu
 }
 
@@ -110,8 +119,8 @@ func (cu *CompanyUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := cu.mutation.Name(); ok {
-		_spec.SetField(company.FieldName, field.TypeString, value)
+	if value, ok := cu.mutation.CreatedAt(); ok {
+		_spec.SetField(company.FieldCreatedAt, field.TypeTime, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, cu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -132,9 +141,17 @@ type CompanyUpdateOne struct {
 	mutation *CompanyMutation
 }
 
-// SetName sets the "name" field.
-func (cuo *CompanyUpdateOne) SetName(s string) *CompanyUpdateOne {
-	cuo.mutation.SetName(s)
+// SetCreatedAt sets the "created_at" field.
+func (cuo *CompanyUpdateOne) SetCreatedAt(t time.Time) *CompanyUpdateOne {
+	cuo.mutation.SetCreatedAt(t)
+	return cuo
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (cuo *CompanyUpdateOne) SetNillableCreatedAt(t *time.Time) *CompanyUpdateOne {
+	if t != nil {
+		cuo.SetCreatedAt(*t)
+	}
 	return cuo
 }
 
@@ -245,8 +262,8 @@ func (cuo *CompanyUpdateOne) sqlSave(ctx context.Context) (_node *Company, err e
 			}
 		}
 	}
-	if value, ok := cuo.mutation.Name(); ok {
-		_spec.SetField(company.FieldName, field.TypeString, value)
+	if value, ok := cuo.mutation.CreatedAt(); ok {
+		_spec.SetField(company.FieldCreatedAt, field.TypeTime, value)
 	}
 	_node = &Company{config: cuo.config}
 	_spec.Assign = _node.assignValues

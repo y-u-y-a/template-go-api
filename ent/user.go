@@ -5,6 +5,7 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 	"y-u-y-a/template-go/ent/company"
 	"y-u-y-a/template-go/ent/user"
 
@@ -15,15 +16,21 @@ import (
 type User struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID int `json:"id,omitempty"`
+	ID string `json:"id,omitempty"`
+	// CreatedAt holds the value of the "created_at" field.
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// UpdatedAt holds the value of the "updated_at" field.
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// 名
 	GivenName string `json:"given_name,omitempty"`
 	// 姓
 	FamilyName string `json:"family_name,omitempty"`
+	// 性別
+	Gender int `json:"gender,omitempty"`
 	// メールアドレス
 	Email string `json:"email,omitempty"`
-	// 年齢
-	Age int `json:"age,omitempty"`
+	// 生年月日
+	Birthday time.Time `json:"birthday,omitempty"`
 	// 企業ID
 	CompanyID int `json:"company_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -58,10 +65,12 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldID, user.FieldAge, user.FieldCompanyID:
+		case user.FieldGender, user.FieldCompanyID:
 			values[i] = new(sql.NullInt64)
-		case user.FieldGivenName, user.FieldFamilyName, user.FieldEmail:
+		case user.FieldID, user.FieldGivenName, user.FieldFamilyName, user.FieldEmail:
 			values[i] = new(sql.NullString)
+		case user.FieldCreatedAt, user.FieldUpdatedAt, user.FieldBirthday:
+			values[i] = new(sql.NullTime)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type User", columns[i])
 		}
@@ -78,11 +87,23 @@ func (u *User) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case user.FieldID:
-			value, ok := values[i].(*sql.NullInt64)
-			if !ok {
-				return fmt.Errorf("unexpected type %T for field id", value)
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field id", values[i])
+			} else if value.Valid {
+				u.ID = value.String
 			}
-			u.ID = int(value.Int64)
+		case user.FieldCreatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field created_at", values[i])
+			} else if value.Valid {
+				u.CreatedAt = value.Time
+			}
+		case user.FieldUpdatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
+			} else if value.Valid {
+				u.UpdatedAt = value.Time
+			}
 		case user.FieldGivenName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field given_name", values[i])
@@ -95,17 +116,23 @@ func (u *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				u.FamilyName = value.String
 			}
+		case user.FieldGender:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field gender", values[i])
+			} else if value.Valid {
+				u.Gender = int(value.Int64)
+			}
 		case user.FieldEmail:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field email", values[i])
 			} else if value.Valid {
 				u.Email = value.String
 			}
-		case user.FieldAge:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field age", values[i])
+		case user.FieldBirthday:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field birthday", values[i])
 			} else if value.Valid {
-				u.Age = int(value.Int64)
+				u.Birthday = value.Time
 			}
 		case user.FieldCompanyID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -146,17 +173,26 @@ func (u *User) String() string {
 	var builder strings.Builder
 	builder.WriteString("User(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", u.ID))
+	builder.WriteString("created_at=")
+	builder.WriteString(u.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("updated_at=")
+	builder.WriteString(u.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
 	builder.WriteString("given_name=")
 	builder.WriteString(u.GivenName)
 	builder.WriteString(", ")
 	builder.WriteString("family_name=")
 	builder.WriteString(u.FamilyName)
 	builder.WriteString(", ")
+	builder.WriteString("gender=")
+	builder.WriteString(fmt.Sprintf("%v", u.Gender))
+	builder.WriteString(", ")
 	builder.WriteString("email=")
 	builder.WriteString(u.Email)
 	builder.WriteString(", ")
-	builder.WriteString("age=")
-	builder.WriteString(fmt.Sprintf("%v", u.Age))
+	builder.WriteString("birthday=")
+	builder.WriteString(u.Birthday.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("company_id=")
 	builder.WriteString(fmt.Sprintf("%v", u.CompanyID))

@@ -11,7 +11,9 @@ var (
 	// CompaniesColumns holds the columns for the "companies" table.
 	CompaniesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString, SchemaType: map[string]string{"postgres": "varchar(30)"}},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "name", Type: field.TypeString},
 	}
 	// CompaniesTable holds the schema information for the "companies" table.
 	CompaniesTable = &schema.Table{
@@ -22,7 +24,13 @@ var (
 	// InquiriesColumns holds the columns for the "inquiries" table.
 	InquiriesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString, SchemaType: map[string]string{"postgres": "varchar(30)"}},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "name", Type: field.TypeString},
+		{Name: "email", Type: field.TypeString},
+		{Name: "tel", Type: field.TypeString},
+		{Name: "content", Type: field.TypeString},
+		{Name: "is_confirm", Type: field.TypeBool, Default: false},
 	}
 	// InquiriesTable holds the schema information for the "inquiries" table.
 	InquiriesTable = &schema.Table{
@@ -32,11 +40,14 @@ var (
 	}
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "given_name", Type: field.TypeString, SchemaType: map[string]string{"postgres": "varchar(30)"}},
-		{Name: "family_name", Type: field.TypeString, SchemaType: map[string]string{"postgres": "varchar(30)"}},
-		{Name: "email", Type: field.TypeString, Nullable: true, SchemaType: map[string]string{"postgres": "varchar(30)"}},
-		{Name: "age", Type: field.TypeInt, Nullable: true, SchemaType: map[string]string{"postgres": "int"}},
+		{Name: "id", Type: field.TypeString},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "given_name", Type: field.TypeString},
+		{Name: "family_name", Type: field.TypeString},
+		{Name: "gender", Type: field.TypeInt},
+		{Name: "email", Type: field.TypeString, Unique: true},
+		{Name: "birthday", Type: field.TypeTime, SchemaType: map[string]string{"postgres": "date"}},
 		{Name: "company_id", Type: field.TypeInt},
 	}
 	// UsersTable holds the schema information for the "users" table.
@@ -47,7 +58,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "users_companies_company",
-				Columns:    []*schema.Column{UsersColumns[5]},
+				Columns:    []*schema.Column{UsersColumns[8]},
 				RefColumns: []*schema.Column{CompaniesColumns[0]},
 				OnDelete:   schema.NoAction,
 			},
@@ -56,7 +67,7 @@ var (
 			{
 				Name:    "user_given_name_family_name",
 				Unique:  false,
-				Columns: []*schema.Column{UsersColumns[1], UsersColumns[2]},
+				Columns: []*schema.Column{UsersColumns[3], UsersColumns[4]},
 			},
 		},
 	}

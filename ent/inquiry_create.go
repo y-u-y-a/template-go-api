@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 	"y-u-y-a/template-go/ent/inquiry"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -19,9 +20,69 @@ type InquiryCreate struct {
 	hooks    []Hook
 }
 
+// SetCreatedAt sets the "created_at" field.
+func (ic *InquiryCreate) SetCreatedAt(t time.Time) *InquiryCreate {
+	ic.mutation.SetCreatedAt(t)
+	return ic
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (ic *InquiryCreate) SetNillableCreatedAt(t *time.Time) *InquiryCreate {
+	if t != nil {
+		ic.SetCreatedAt(*t)
+	}
+	return ic
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (ic *InquiryCreate) SetUpdatedAt(t time.Time) *InquiryCreate {
+	ic.mutation.SetUpdatedAt(t)
+	return ic
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (ic *InquiryCreate) SetNillableUpdatedAt(t *time.Time) *InquiryCreate {
+	if t != nil {
+		ic.SetUpdatedAt(*t)
+	}
+	return ic
+}
+
 // SetName sets the "name" field.
 func (ic *InquiryCreate) SetName(s string) *InquiryCreate {
 	ic.mutation.SetName(s)
+	return ic
+}
+
+// SetEmail sets the "email" field.
+func (ic *InquiryCreate) SetEmail(s string) *InquiryCreate {
+	ic.mutation.SetEmail(s)
+	return ic
+}
+
+// SetTel sets the "tel" field.
+func (ic *InquiryCreate) SetTel(s string) *InquiryCreate {
+	ic.mutation.SetTel(s)
+	return ic
+}
+
+// SetContent sets the "content" field.
+func (ic *InquiryCreate) SetContent(s string) *InquiryCreate {
+	ic.mutation.SetContent(s)
+	return ic
+}
+
+// SetIsConfirm sets the "is_confirm" field.
+func (ic *InquiryCreate) SetIsConfirm(b bool) *InquiryCreate {
+	ic.mutation.SetIsConfirm(b)
+	return ic
+}
+
+// SetNillableIsConfirm sets the "is_confirm" field if the given value is not nil.
+func (ic *InquiryCreate) SetNillableIsConfirm(b *bool) *InquiryCreate {
+	if b != nil {
+		ic.SetIsConfirm(*b)
+	}
 	return ic
 }
 
@@ -36,6 +97,7 @@ func (ic *InquiryCreate) Save(ctx context.Context) (*Inquiry, error) {
 		err  error
 		node *Inquiry
 	)
+	ic.defaults()
 	if len(ic.hooks) == 0 {
 		if err = ic.check(); err != nil {
 			return nil, err
@@ -99,10 +161,44 @@ func (ic *InquiryCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (ic *InquiryCreate) defaults() {
+	if _, ok := ic.mutation.CreatedAt(); !ok {
+		v := inquiry.DefaultCreatedAt()
+		ic.mutation.SetCreatedAt(v)
+	}
+	if _, ok := ic.mutation.UpdatedAt(); !ok {
+		v := inquiry.DefaultUpdatedAt()
+		ic.mutation.SetUpdatedAt(v)
+	}
+	if _, ok := ic.mutation.IsConfirm(); !ok {
+		v := inquiry.DefaultIsConfirm
+		ic.mutation.SetIsConfirm(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (ic *InquiryCreate) check() error {
+	if _, ok := ic.mutation.CreatedAt(); !ok {
+		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Inquiry.created_at"`)}
+	}
+	if _, ok := ic.mutation.UpdatedAt(); !ok {
+		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "Inquiry.updated_at"`)}
+	}
 	if _, ok := ic.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Inquiry.name"`)}
+	}
+	if _, ok := ic.mutation.Email(); !ok {
+		return &ValidationError{Name: "email", err: errors.New(`ent: missing required field "Inquiry.email"`)}
+	}
+	if _, ok := ic.mutation.Tel(); !ok {
+		return &ValidationError{Name: "tel", err: errors.New(`ent: missing required field "Inquiry.tel"`)}
+	}
+	if _, ok := ic.mutation.Content(); !ok {
+		return &ValidationError{Name: "content", err: errors.New(`ent: missing required field "Inquiry.content"`)}
+	}
+	if _, ok := ic.mutation.IsConfirm(); !ok {
+		return &ValidationError{Name: "is_confirm", err: errors.New(`ent: missing required field "Inquiry.is_confirm"`)}
 	}
 	return nil
 }
@@ -131,9 +227,33 @@ func (ic *InquiryCreate) createSpec() (*Inquiry, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if value, ok := ic.mutation.CreatedAt(); ok {
+		_spec.SetField(inquiry.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := ic.mutation.UpdatedAt(); ok {
+		_spec.SetField(inquiry.FieldUpdatedAt, field.TypeTime, value)
+		_node.UpdatedAt = value
+	}
 	if value, ok := ic.mutation.Name(); ok {
 		_spec.SetField(inquiry.FieldName, field.TypeString, value)
 		_node.Name = value
+	}
+	if value, ok := ic.mutation.Email(); ok {
+		_spec.SetField(inquiry.FieldEmail, field.TypeString, value)
+		_node.Email = value
+	}
+	if value, ok := ic.mutation.Tel(); ok {
+		_spec.SetField(inquiry.FieldTel, field.TypeString, value)
+		_node.Tel = value
+	}
+	if value, ok := ic.mutation.Content(); ok {
+		_spec.SetField(inquiry.FieldContent, field.TypeString, value)
+		_node.Content = value
+	}
+	if value, ok := ic.mutation.IsConfirm(); ok {
+		_spec.SetField(inquiry.FieldIsConfirm, field.TypeBool, value)
+		_node.IsConfirm = value
 	}
 	return _node, _spec
 }
@@ -152,6 +272,7 @@ func (icb *InquiryCreateBulk) Save(ctx context.Context) ([]*Inquiry, error) {
 	for i := range icb.builders {
 		func(i int, root context.Context) {
 			builder := icb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*InquiryMutation)
 				if !ok {

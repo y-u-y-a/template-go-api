@@ -2,8 +2,54 @@
 
 package ent
 
+import (
+	"time"
+	"y-u-y-a/template-go/ent/company"
+	"y-u-y-a/template-go/ent/inquiry"
+	"y-u-y-a/template-go/ent/schema"
+	"y-u-y-a/template-go/ent/user"
+)
+
 // The init function reads all schema descriptors with runtime code
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	companyFields := schema.Company{}.Fields()
+	_ = companyFields
+	// companyDescCreatedAt is the schema descriptor for created_at field.
+	companyDescCreatedAt := companyFields[0].Descriptor()
+	// company.DefaultCreatedAt holds the default value on creation for the created_at field.
+	company.DefaultCreatedAt = companyDescCreatedAt.Default.(func() time.Time)
+	// companyDescUpdatedAt is the schema descriptor for updated_at field.
+	companyDescUpdatedAt := companyFields[1].Descriptor()
+	// company.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	company.DefaultUpdatedAt = companyDescUpdatedAt.Default.(func() time.Time)
+	inquiryFields := schema.Inquiry{}.Fields()
+	_ = inquiryFields
+	// inquiryDescCreatedAt is the schema descriptor for created_at field.
+	inquiryDescCreatedAt := inquiryFields[0].Descriptor()
+	// inquiry.DefaultCreatedAt holds the default value on creation for the created_at field.
+	inquiry.DefaultCreatedAt = inquiryDescCreatedAt.Default.(func() time.Time)
+	// inquiryDescUpdatedAt is the schema descriptor for updated_at field.
+	inquiryDescUpdatedAt := inquiryFields[1].Descriptor()
+	// inquiry.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	inquiry.DefaultUpdatedAt = inquiryDescUpdatedAt.Default.(func() time.Time)
+	// inquiryDescIsConfirm is the schema descriptor for is_confirm field.
+	inquiryDescIsConfirm := inquiryFields[6].Descriptor()
+	// inquiry.DefaultIsConfirm holds the default value on creation for the is_confirm field.
+	inquiry.DefaultIsConfirm = inquiryDescIsConfirm.Default.(bool)
+	userFields := schema.User{}.Fields()
+	_ = userFields
+	// userDescCreatedAt is the schema descriptor for created_at field.
+	userDescCreatedAt := userFields[1].Descriptor()
+	// user.DefaultCreatedAt holds the default value on creation for the created_at field.
+	user.DefaultCreatedAt = userDescCreatedAt.Default.(func() time.Time)
+	// userDescUpdatedAt is the schema descriptor for updated_at field.
+	userDescUpdatedAt := userFields[2].Descriptor()
+	// user.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	user.DefaultUpdatedAt = userDescUpdatedAt.Default.(func() time.Time)
+	// userDescGender is the schema descriptor for gender field.
+	userDescGender := userFields[5].Descriptor()
+	// user.GenderValidator is a validator for the "gender" field. It is called by the builders before save.
+	user.GenderValidator = userDescGender.Validators[0].(func(int) error)
 }

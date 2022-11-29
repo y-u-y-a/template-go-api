@@ -3,6 +3,7 @@
 package inquiry
 
 import (
+	"time"
 	"y-u-y-a/template-go/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
@@ -79,10 +80,180 @@ func IDLTE(id int) predicate.Inquiry {
 	})
 }
 
+// CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
+func CreatedAt(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreatedAt), v))
+	})
+}
+
+// UpdatedAt applies equality check predicate on the "updated_at" field. It's identical to UpdatedAtEQ.
+func UpdatedAt(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUpdatedAt), v))
+	})
+}
+
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
 func Name(v string) predicate.Inquiry {
 	return predicate.Inquiry(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldName), v))
+	})
+}
+
+// Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
+func Email(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldEmail), v))
+	})
+}
+
+// Tel applies equality check predicate on the "tel" field. It's identical to TelEQ.
+func Tel(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTel), v))
+	})
+}
+
+// Content applies equality check predicate on the "content" field. It's identical to ContentEQ.
+func Content(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldContent), v))
+	})
+}
+
+// IsConfirm applies equality check predicate on the "is_confirm" field. It's identical to IsConfirmEQ.
+func IsConfirm(v bool) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldIsConfirm), v))
+	})
+}
+
+// CreatedAtEQ applies the EQ predicate on the "created_at" field.
+func CreatedAtEQ(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreatedAt), v))
+	})
+}
+
+// CreatedAtNEQ applies the NEQ predicate on the "created_at" field.
+func CreatedAtNEQ(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldCreatedAt), v))
+	})
+}
+
+// CreatedAtIn applies the In predicate on the "created_at" field.
+func CreatedAtIn(vs ...time.Time) predicate.Inquiry {
+	v := make([]any, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldCreatedAt), v...))
+	})
+}
+
+// CreatedAtNotIn applies the NotIn predicate on the "created_at" field.
+func CreatedAtNotIn(vs ...time.Time) predicate.Inquiry {
+	v := make([]any, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldCreatedAt), v...))
+	})
+}
+
+// CreatedAtGT applies the GT predicate on the "created_at" field.
+func CreatedAtGT(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldCreatedAt), v))
+	})
+}
+
+// CreatedAtGTE applies the GTE predicate on the "created_at" field.
+func CreatedAtGTE(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldCreatedAt), v))
+	})
+}
+
+// CreatedAtLT applies the LT predicate on the "created_at" field.
+func CreatedAtLT(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldCreatedAt), v))
+	})
+}
+
+// CreatedAtLTE applies the LTE predicate on the "created_at" field.
+func CreatedAtLTE(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldCreatedAt), v))
+	})
+}
+
+// UpdatedAtEQ applies the EQ predicate on the "updated_at" field.
+func UpdatedAtEQ(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUpdatedAt), v))
+	})
+}
+
+// UpdatedAtNEQ applies the NEQ predicate on the "updated_at" field.
+func UpdatedAtNEQ(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldUpdatedAt), v))
+	})
+}
+
+// UpdatedAtIn applies the In predicate on the "updated_at" field.
+func UpdatedAtIn(vs ...time.Time) predicate.Inquiry {
+	v := make([]any, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldUpdatedAt), v...))
+	})
+}
+
+// UpdatedAtNotIn applies the NotIn predicate on the "updated_at" field.
+func UpdatedAtNotIn(vs ...time.Time) predicate.Inquiry {
+	v := make([]any, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldUpdatedAt), v...))
+	})
+}
+
+// UpdatedAtGT applies the GT predicate on the "updated_at" field.
+func UpdatedAtGT(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldUpdatedAt), v))
+	})
+}
+
+// UpdatedAtGTE applies the GTE predicate on the "updated_at" field.
+func UpdatedAtGTE(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldUpdatedAt), v))
+	})
+}
+
+// UpdatedAtLT applies the LT predicate on the "updated_at" field.
+func UpdatedAtLT(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldUpdatedAt), v))
+	})
+}
+
+// UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
+func UpdatedAtLTE(v time.Time) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldUpdatedAt), v))
 	})
 }
 
@@ -182,6 +353,317 @@ func NameEqualFold(v string) predicate.Inquiry {
 func NameContainsFold(v string) predicate.Inquiry {
 	return predicate.Inquiry(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldName), v))
+	})
+}
+
+// EmailEQ applies the EQ predicate on the "email" field.
+func EmailEQ(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldEmail), v))
+	})
+}
+
+// EmailNEQ applies the NEQ predicate on the "email" field.
+func EmailNEQ(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldEmail), v))
+	})
+}
+
+// EmailIn applies the In predicate on the "email" field.
+func EmailIn(vs ...string) predicate.Inquiry {
+	v := make([]any, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldEmail), v...))
+	})
+}
+
+// EmailNotIn applies the NotIn predicate on the "email" field.
+func EmailNotIn(vs ...string) predicate.Inquiry {
+	v := make([]any, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldEmail), v...))
+	})
+}
+
+// EmailGT applies the GT predicate on the "email" field.
+func EmailGT(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldEmail), v))
+	})
+}
+
+// EmailGTE applies the GTE predicate on the "email" field.
+func EmailGTE(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldEmail), v))
+	})
+}
+
+// EmailLT applies the LT predicate on the "email" field.
+func EmailLT(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldEmail), v))
+	})
+}
+
+// EmailLTE applies the LTE predicate on the "email" field.
+func EmailLTE(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldEmail), v))
+	})
+}
+
+// EmailContains applies the Contains predicate on the "email" field.
+func EmailContains(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldEmail), v))
+	})
+}
+
+// EmailHasPrefix applies the HasPrefix predicate on the "email" field.
+func EmailHasPrefix(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldEmail), v))
+	})
+}
+
+// EmailHasSuffix applies the HasSuffix predicate on the "email" field.
+func EmailHasSuffix(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldEmail), v))
+	})
+}
+
+// EmailEqualFold applies the EqualFold predicate on the "email" field.
+func EmailEqualFold(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldEmail), v))
+	})
+}
+
+// EmailContainsFold applies the ContainsFold predicate on the "email" field.
+func EmailContainsFold(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldEmail), v))
+	})
+}
+
+// TelEQ applies the EQ predicate on the "tel" field.
+func TelEQ(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTel), v))
+	})
+}
+
+// TelNEQ applies the NEQ predicate on the "tel" field.
+func TelNEQ(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTel), v))
+	})
+}
+
+// TelIn applies the In predicate on the "tel" field.
+func TelIn(vs ...string) predicate.Inquiry {
+	v := make([]any, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldTel), v...))
+	})
+}
+
+// TelNotIn applies the NotIn predicate on the "tel" field.
+func TelNotIn(vs ...string) predicate.Inquiry {
+	v := make([]any, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldTel), v...))
+	})
+}
+
+// TelGT applies the GT predicate on the "tel" field.
+func TelGT(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTel), v))
+	})
+}
+
+// TelGTE applies the GTE predicate on the "tel" field.
+func TelGTE(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTel), v))
+	})
+}
+
+// TelLT applies the LT predicate on the "tel" field.
+func TelLT(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTel), v))
+	})
+}
+
+// TelLTE applies the LTE predicate on the "tel" field.
+func TelLTE(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTel), v))
+	})
+}
+
+// TelContains applies the Contains predicate on the "tel" field.
+func TelContains(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldTel), v))
+	})
+}
+
+// TelHasPrefix applies the HasPrefix predicate on the "tel" field.
+func TelHasPrefix(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldTel), v))
+	})
+}
+
+// TelHasSuffix applies the HasSuffix predicate on the "tel" field.
+func TelHasSuffix(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldTel), v))
+	})
+}
+
+// TelEqualFold applies the EqualFold predicate on the "tel" field.
+func TelEqualFold(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldTel), v))
+	})
+}
+
+// TelContainsFold applies the ContainsFold predicate on the "tel" field.
+func TelContainsFold(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldTel), v))
+	})
+}
+
+// ContentEQ applies the EQ predicate on the "content" field.
+func ContentEQ(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldContent), v))
+	})
+}
+
+// ContentNEQ applies the NEQ predicate on the "content" field.
+func ContentNEQ(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldContent), v))
+	})
+}
+
+// ContentIn applies the In predicate on the "content" field.
+func ContentIn(vs ...string) predicate.Inquiry {
+	v := make([]any, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldContent), v...))
+	})
+}
+
+// ContentNotIn applies the NotIn predicate on the "content" field.
+func ContentNotIn(vs ...string) predicate.Inquiry {
+	v := make([]any, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldContent), v...))
+	})
+}
+
+// ContentGT applies the GT predicate on the "content" field.
+func ContentGT(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldContent), v))
+	})
+}
+
+// ContentGTE applies the GTE predicate on the "content" field.
+func ContentGTE(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldContent), v))
+	})
+}
+
+// ContentLT applies the LT predicate on the "content" field.
+func ContentLT(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldContent), v))
+	})
+}
+
+// ContentLTE applies the LTE predicate on the "content" field.
+func ContentLTE(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldContent), v))
+	})
+}
+
+// ContentContains applies the Contains predicate on the "content" field.
+func ContentContains(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldContent), v))
+	})
+}
+
+// ContentHasPrefix applies the HasPrefix predicate on the "content" field.
+func ContentHasPrefix(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldContent), v))
+	})
+}
+
+// ContentHasSuffix applies the HasSuffix predicate on the "content" field.
+func ContentHasSuffix(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldContent), v))
+	})
+}
+
+// ContentEqualFold applies the EqualFold predicate on the "content" field.
+func ContentEqualFold(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldContent), v))
+	})
+}
+
+// ContentContainsFold applies the ContainsFold predicate on the "content" field.
+func ContentContainsFold(v string) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldContent), v))
+	})
+}
+
+// IsConfirmEQ applies the EQ predicate on the "is_confirm" field.
+func IsConfirmEQ(v bool) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldIsConfirm), v))
+	})
+}
+
+// IsConfirmNEQ applies the NEQ predicate on the "is_confirm" field.
+func IsConfirmNEQ(v bool) predicate.Inquiry {
+	return predicate.Inquiry(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldIsConfirm), v))
 	})
 }
 

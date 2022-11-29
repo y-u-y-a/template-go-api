@@ -253,12 +253,12 @@ func (iq *InquiryQuery) Clone() *InquiryQuery {
 // Example:
 //
 //	var v []struct {
-//		Name string `json:"name,omitempty"`
+//		CreatedAt time.Time `json:"created_at,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Inquiry.Query().
-//		GroupBy(inquiry.FieldName).
+//		GroupBy(inquiry.FieldCreatedAt).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -282,11 +282,11 @@ func (iq *InquiryQuery) GroupBy(field string, fields ...string) *InquiryGroupBy 
 // Example:
 //
 //	var v []struct {
-//		Name string `json:"name,omitempty"`
+//		CreatedAt time.Time `json:"created_at,omitempty"`
 //	}
 //
 //	client.Inquiry.Query().
-//		Select(inquiry.FieldName).
+//		Select(inquiry.FieldCreatedAt).
 //		Scan(ctx, &v)
 //
 func (iq *InquiryQuery) Select(fields ...string) *InquirySelect {
