@@ -1,8 +1,9 @@
 package schema
 
 import (
+	"time"
+
 	"entgo.io/ent"
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/schema/field"
 )
 
@@ -14,11 +15,10 @@ type Company struct {
 // Fields of the Company.
 func (Company) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("name").
-			Comment("会社名").
-			SchemaType(map[string]string{
-				dialect.Postgres: "varchar(30)",
-			}),
+		field.Time("created_at").Default(time.Now),
+		field.Time("updated_at").Default(time.Now).Immutable(),
+		// -->
+		field.String("name").Comment("会社名").Immutable(),
 	}
 }
 

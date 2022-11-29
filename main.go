@@ -29,7 +29,9 @@ func init() {
 }
 
 func main() {
-	// ロギングの出力設定
+	/*****************************
+	ロギングの出力設定
+	******************************/
 	var logger *zap.Logger
 	if config.AppEnv.IsProd() {
 		logger, _ = zap.NewProduction()

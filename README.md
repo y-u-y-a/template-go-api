@@ -1,17 +1,19 @@
-### 環境構築
-
-```shell:
-$ air init # .air.toml作成
-$ go mod y-u-y-a/template-go # go.mod作成
-```
-
 ### 使用ライブラリ
 
 - Golang 1.18
 - Air
 - ent
-
+- golang-migrate
 - PostgreSQL
+
+### 環境構築
+
+```shell:
+$ make init
+$ make up-db
+$ make migrate
+$ make seed
+```
 
 ### テーブル追加方法
 
@@ -31,11 +33,15 @@ $ go generate ./ent
 4. マイグレーションファイルを生成する
 
 ```shell:
-$ make gen-migration
+$ make migrations
 ```
 
 5. マイグレーションを実行する
 
 ```shell:
-$ make migrate-up
+$ make migrate
 ```
+
+### テーブルのカラム変更方法
+
+todo ...

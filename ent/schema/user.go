@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"time"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/schema/edge"
@@ -16,28 +18,15 @@ type User struct {
 // Fields of the User.
 func (User) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("given_name").
-			Comment("名").
-			SchemaType(map[string]string{
-				dialect.Postgres: "varchar(30)",
-			}),
-		field.String("family_name").
-			Comment("姓").
-			SchemaType(map[string]string{
-				dialect.Postgres: "varchar(30)",
-			}),
-		field.String("email").
-			Comment("メールアドレス").
-			Optional().
-			SchemaType(map[string]string{
-				dialect.Postgres: "varchar(30)",
-			}),
-		field.Int("age").
-			Comment("年齢").
-			Optional().
-			SchemaType(map[string]string{
-				dialect.Postgres: "int",
-			}),
+		field.String("id").Immutable(),
+		field.Time("created_at").Default(time.Now),
+		field.Time("updated_at").Default(time.Now).Immutable(),
+		// -->
+		field.String("given_name").Comment("名"),
+		field.String("family_name").Comment("姓"),
+		field.Int("gender").Comment("性別").Range(1, 3),
+		field.String("email").Comment("メールアドレス").Unique(),
+		field.Time("birthday").Comment("生年月日").SchemaType(map[string]string{dialect.Postgres: "date"}),
 		field.Int("company_id").Comment("企業ID"),
 	}
 }

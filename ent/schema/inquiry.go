@@ -1,8 +1,9 @@
 package schema
 
 import (
+	"time"
+
 	"entgo.io/ent"
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/schema/field"
 )
 
@@ -14,11 +15,14 @@ type Inquiry struct {
 // Fields of the Inquiry.
 func (Inquiry) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("name").
-			Comment("名前").
-			SchemaType(map[string]string{
-				dialect.Postgres: "varchar(30)",
-			}),
+		field.Time("created_at").Default(time.Now),
+		field.Time("updated_at").Default(time.Now).Immutable(),
+		// -->
+		field.String("name").Comment("名前"),
+		field.String("email").Comment("メールアドレス"),
+		field.String("tel").Comment("電話番号"),
+		field.String("content").Comment("お問い合わせ内容"),
+		field.Bool("is_confirm").Comment("対応フラグ").Default(false),
 	}
 }
 
