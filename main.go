@@ -5,9 +5,12 @@ import (
 	"net/http"
 	"time"
 	"y-u-y-a/template-go/config"
+	"y-u-y-a/template-go/ent"
+	"y-u-y-a/template-go/handler"
+	"y-u-y-a/template-go/repository"
+	"y-u-y-a/template-go/usecase"
 	"y-u-y-a/template-go/utils"
 
-	"entgo.io/ent/examples/fs/ent"
 	chi "github.com/go-chi/chi/v5"
 	chiMiddleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
@@ -42,12 +45,13 @@ func main() {
 	/*****************************
 	DB接続
 	******************************/
-	client, err := ent.Open("postgres", fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%ssslmode=disable",
+	db_url := fmt.Sprintf(
+		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		config.AppEnv.DbUser, config.AppEnv.DbPassword,
 		config.AppEnv.DbHost, config.AppEnv.DbPort,
 		config.AppEnv.DbName,
-	))
+	)
+	client, err := ent.Open("postgres", db_url)
 	if err != nil {
 		logger.Fatal("データベース接続に失敗しました", zap.Error(err))
 	}
@@ -73,6 +77,16 @@ func main() {
 	}))
 
 	/*****************************
+	ルーティングの設定
+	******************************/
+	databaseRepository := repository.NewDatabaseRepository()
+	inquiryUsecase := usecase.NewInquiryUsecase(logger, databaseRepository)
+	adminHandler := handler.NewAdminHandler(logger, inquiryUsecase)
+	r.Route("/admin", func(r chi.Router) {
+		r.Get("/inquiries", adminHandler.Route().ServeHTTP)
+	})
+
+	/*****************************
 	サーバー起動
 	******************************/
 	pp.Println("appConfig is", config.AppEnv)
@@ -80,5 +94,4 @@ func main() {
 	if err := http.ListenAndServe(fmt.Sprintf(":%v", config.AppEnv.ServerPort), r); err != nil {
 		logger.Fatal("サーバー起動に失敗しました", zap.Error(err))
 	}
-
 }

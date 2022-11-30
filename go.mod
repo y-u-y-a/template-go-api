@@ -11,6 +11,7 @@ require (
 	entgo.io/ent v0.11.4 // indirect
 	github.com/agext/levenshtein v1.2.1 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
+	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/go-chi/cors v1.2.1 // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
@@ -42,6 +43,7 @@ require (
 require (
 	ariga.io/atlas v0.8.3
 	github.com/go-chi/chi/v5 v5.0.7
+	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
