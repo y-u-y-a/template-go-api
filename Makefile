@@ -2,7 +2,7 @@ include .env.development
 
 .PHONY: up down dev build
 init:
-	go install github.com/cosmtrek/air@latest
+	go install github.com/air-verse/air
 	go install github.com/golang/mock/mockgen@latest
 	go install github.com/rakyll/gotest@latest
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
@@ -14,12 +14,11 @@ dev: # サーバー起動
 build:
 	go build .
 
-.PHONY: up-db down-db migrations migrate migrate-down seed
+.PHONY: down migrations migrate migrate-down seed
 
-up-db: # dbを起動する
-	docker-compose up -d
-
-down-db: # dbを停止してデータを削除する
+up:
+	docker compose up -d
+down:
 	docker-compose down
 	rm -rf database/data
 

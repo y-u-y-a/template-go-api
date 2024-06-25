@@ -5,9 +5,7 @@ import (
 	"net/http"
 	"time"
 	"y-u-y-a/template-go/config"
-	"y-u-y-a/template-go/ent"
 	"y-u-y-a/template-go/handler"
-	"y-u-y-a/template-go/repository"
 	"y-u-y-a/template-go/usecase"
 	"y-u-y-a/template-go/utils"
 
@@ -45,17 +43,17 @@ func main() {
 	/*****************************
 	DB接続
 	******************************/
-	db_url := fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
-		config.AppEnv.DbUser, config.AppEnv.DbPassword,
-		config.AppEnv.DbHost, config.AppEnv.DbPort,
-		config.AppEnv.DbName,
-	)
-	client, err := ent.Open("postgres", db_url)
-	if err != nil {
-		logger.Fatal("データベース接続に失敗しました", zap.Error(err))
-	}
-	defer client.Close()
+	// db_url := fmt.Sprintf(
+	// 	"postgres://%s:%s@%s:%s/%s?sslmode=disable",
+	// 	config.AppEnv.DbUser, config.AppEnv.DbPassword,
+	// 	config.AppEnv.DbHost, config.AppEnv.DbPort,
+	// 	config.AppEnv.DbName,
+	// )
+	// client, err := ent.Open("postgres", db_url)
+	// if err != nil {
+	// 	logger.Fatal("データベース接続に失敗しました", zap.Error(err))
+	// }
+	// defer client.Close()
 
 	/*****************************
 	ミドルウェアの設定
@@ -79,11 +77,10 @@ func main() {
 	/*****************************
 	ルーティングの設定
 	******************************/
-	databaseRepository := repository.NewDatabaseRepository()
-	inquiryUsecase := usecase.NewInquiryUsecase(logger, databaseRepository)
-	adminHandler := handler.NewAdminHandler(logger, inquiryUsecase)
-	r.Route("/admin", func(r chi.Router) {
-		r.Get("/inquiries", adminHandler.Route().ServeHTTP)
+	userUsecase := usecase.NewUserUsecase(logger)
+	publicHandler := handler.NewPublicHandler(logger, userUsecase)
+	r.Route("/", func(r chi.Router) {
+		r.Get("/user", publicHandler.Route().ServeHTTP)
 	})
 
 	/*****************************
